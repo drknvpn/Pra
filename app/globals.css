@@ -104,10 +104,11 @@
   animation: grain-shift 0.6s steps(2) infinite;
 }
 
-@keyframes grain-shift {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(-3%, 2%); }
-  100% { transform: translate(2%, -2%); }
+/* ✅ Для мобилок — уменьшаем прозрачность оверлея */
+@media (max-width: 768px) {
+  .grain-overlay {
+    opacity: 0.015; /* почти незаметно, но эффект остаётся */
+  }
 }
 
 /* faint scanlines for industrial feel */
