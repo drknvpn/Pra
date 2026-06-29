@@ -173,6 +173,6 @@ export const socials: Social[] = [
     { label: 'ВКонтакте', handle: '/prakillagramm', url: 'https://vk.com/prakillagramm' },
     { label: 'YouTube', handle: '@prakillagramm', url: 'https://www.youtube.com/@prakillagramm' },
     { label: 'Telegram', handle: '@prakillagramm_one39', url: 'https://t.me/prakillagramm_one39' },
-    { label: 'Instagram', handle: '@prakillagramm_one', url: 'https://www.instagram.com/prakillagramm_one/' },
+    { label: 'Instagram*', handle: '@prakillagramm_one', url: 'https://www.instagram.com/prakillagramm_one/' },
     { label: 'Яндекс.Музыка', handle: 'Слушать', url: YANDEX_MUSIC_URL },
 ]
