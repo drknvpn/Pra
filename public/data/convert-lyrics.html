@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🎵 Текста в Json</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #e5e5e5;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            padding: 30px 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 30px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+            h1 small {
+                font-size: 14px;
+                font-weight: 400;
+                color: #888;
+                background: #2a2a2a;
+                padding: 2px 12px;
+                border-radius: 12px;
+            }
+
+        .subtitle {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid #2a2a2a;
+            padding-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+            .subtitle .stats {
+                font-family: 'Courier New', monospace;
+                font-size: 12px;
+                color: #666;
+            }
+
+                .subtitle .stats span {
+                    color: #2563eb;
+                }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #aaa;
+            margin-bottom: 4px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #eee;
+            padding: 10px 12px;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            transition: border-color 0.2s;
+        }
+
+            input:focus, textarea:focus, select:focus {
+                outline: none;
+                border-color: #2563eb;
+                box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+            }
+
+        textarea {
+            min-height: 200px;
+            resize: vertical;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .textarea-wrap {
+            margin-bottom: 16px;
+        }
+
+        .btn {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            color: #eee;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-right: 10px;
+        }
+
+            .btn:hover {
+                background: #333;
+                border-color: #666;
+            }
+
+        .btn-primary {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: #fff;
+        }
+
+            .btn-primary:hover {
+                background: #1d4ed8;
+                border-color: #1d4ed8;
+                transform: scale(1.02);
+            }
+
+        .btn-success {
+            background: #16a34a;
+            border-color: #16a34a;
+            color: #fff;
+        }
+
+            .btn-success:hover {
+                background: #15803d;
+                border-color: #15803d;
+            }
+
+        .btn-danger {
+            background: #dc2626;
+            border-color: #dc2626;
+            color: #fff;
+        }
+
+            .btn-danger:hover {
+                background: #b91c1c;
+                border-color: #b91c1c;
+            }
+
+        .btn-warning {
+            background: #f59e0b;
+            border-color: #f59e0b;
+            color: #000;
+        }
+
+            .btn-warning:hover {
+                background: #d97706;
+                border-color: #d97706;
+            }
+
+        .output-wrap {
+            margin-top: 20px;
+            border-top: 1px solid #2a2a2a;
+            padding-top: 16px;
+        }
+
+            .output-wrap label {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+        pre {
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 12px;
+            line-height: 1.5;
+            font-family: 'Courier New', monospace;
+            max-height: 450px;
+            overflow: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            color: #d4d4d4;
+            margin-top: 6px;
+        }
+
+        .copy-feedback {
+            color: #16a34a;
+            font-size: 13px;
+            margin-left: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+            .copy-feedback.show {
+                opacity: 1;
+            }
+
+        .hint {
+            color: #666;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #2a2a2a;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: #999;
+        }
+
+        .flex {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            background: #111;
+            border-radius: 8px;
+            border: 1px solid #2a2a2a;
+        }
+
+            .checkbox-group input[type="checkbox"] {
+                width: 18px;
+                height: 18px;
+                accent-color: #2563eb;
+                cursor: pointer;
+                flex-shrink: 0;
+            }
+
+            .checkbox-group label {
+                margin-bottom: 0;
+                cursor: pointer;
+                font-weight: 400;
+                text-transform: none;
+                color: #ccc;
+            }
+
+            .checkbox-group .sub-label {
+                color: #666;
+                font-size: 12px;
+                font-weight: 400;
+                text-transform: none;
+            }
+
+        .album-id-field {
+            display: none;
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            background: #0a0a0a;
+            border-radius: 8px;
+            border: 1px solid #2a2a2a;
+        }
+
+            .album-id-field.visible {
+                display: block;
+            }
+
+        .release-select-wrap {
+            margin-bottom: 16px;
+        }
+
+            .release-select-wrap label {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+
+            .release-select-wrap select {
+                flex: 1;
+                min-width: 200px;
+            }
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 8px 16px;
+            background: #0a0a0a;
+            border-radius: 8px;
+            border: 1px solid #2a2a2a;
+            margin-bottom: 16px;
+            font-size: 12px;
+            color: #666;
+            font-family: 'Courier New', monospace;
+            flex-wrap: wrap;
+        }
+
+            .status-bar .dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                display: inline-block;
+            }
+
+                .status-bar .dot.green {
+                    background: #16a34a;
+                }
+
+                .status-bar .dot.yellow {
+                    background: #f59e0b;
+                }
+
+                .status-bar .dot.red {
+                    background: #dc2626;
+                }
+
+        .track-counter {
+            color: #2563eb;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .upload-area {
+            border: 2px dashed #333;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 16px;
+            transition: border-color 0.3s, background 0.3s;
+            cursor: pointer;
+        }
+
+            .upload-area:hover {
+                border-color: #2563eb;
+                background: #111;
+            }
+
+            .upload-area.dragover {
+                border-color: #2563eb;
+                background: #1a1a3a;
+            }
+
+            .upload-area input[type="file"] {
+                display: none;
+            }
+
+            .upload-area .icon {
+                font-size: 32px;
+                display: block;
+                margin-bottom: 8px;
+            }
+
+            .upload-area .text {
+                font-size: 14px;
+                color: #888;
+            }
+
+                .upload-area .text strong {
+                    color: #2563eb;
+                }
+
+        .file-loaded {
+            border-color: #16a34a;
+            background: #0a1a0a;
+        }
+
+            .file-loaded .text {
+                color: #16a34a;
+            }
+
+        .search-wrap {
+            margin-bottom: 16px;
+        }
+
+            .search-wrap input {
+                background: #111;
+                border: 1px solid #333;
+                border-radius: 8px;
+                color: #eee;
+                padding: 8px 12px;
+                font-size: 13px;
+                font-family: 'Courier New', monospace;
+                width: 100%;
+                transition: border-color 0.2s;
+            }
+
+                .search-wrap input:focus {
+                    outline: none;
+                    border-color: #2563eb;
+                    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+                }
+
+        .release-info {
+            font-size: 11px;
+            color: #666;
+            font-family: 'Courier New', monospace;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            🎵 Конструктор текстов
+            <small>v3.0 · Beta</small>
+        </h1>
+        <div class="subtitle">
+            <span>Вставь текст песни — получи готовый объект для <code>lyrics.json</code></span>
+            <span class="stats">📦 <span id="releaseCount">0</span> релизов загружено</span>
+        </div>
+
+        <!-- Статус-бар -->
+        <div class="status-bar">
+            <span class="dot green" id="statusDot"></span>
+            <span id="statusText">📂 Загрузи releases.json</span>
+            <span style="margin-left:auto;">Счётчик треков: <span class="track-counter" id="counterDisplay">1</span></span>
+        </div>
+
+        <!-- Загрузка файла -->
+        <div class="upload-area" id="uploadArea">
+            <span class="icon">📂</span>
+            <span class="text">
+                <strong>Нажми</strong> или <strong>перетащи</strong> сюда <code>releases.json</code>
+            </span>
+            <input type="file" id="fileInput" accept=".json" />
+        </div>
+
+        <!-- Поиск по релизам -->
+        <div class="search-wrap" id="searchWrap" style="display:none;">
+            <input type="text" id="searchInput" placeholder="🔍 Поиск по названию релиза..." />
+        </div>
+
+        <!-- Выбор релиза -->
+        <div class="release-select-wrap" id="releaseWrap" style="display:none;">
+            <label>
+                <span style="font-size:12px;font-weight:600;text-transform:uppercase;color:#aaa;">📂 Выбери релиз</span>
+                <select id="releaseSelect">
+                    <option value="">— выбери из списка —</option>
+                </select>
+            </label>
+            <div class="hint">🎯 Выбери релиз, и поля заполнятся автоматически. Для альбомов включится режим трека.</div>
+        </div>
+
+        <div class="grid">
+            <div>
+                <label>📝 Название трека</label>
+                <input type="text" id="title" placeholder="Например: Детство" />
+            </div>
+            <div>
+                <label>📅 Год</label>
+                <input type="text" id="year" placeholder="2026" />
+            </div>
+        </div>
+
+        <div>
+            <label>🎤 Исполнитель(и)</label>
+            <input type="text" id="artist" placeholder="Pra(Killa'Gramm), Romadi, Chizabeat" value="Pra(Killa`Gramm)" />
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="isAlbum" />
+            <label for="isAlbum">🎯 Это трек из альбома (не сингл)</label>
+            <span class="sub-label">— ID будет сгенерирован автоматически: <span id="albumIdPreview">альбом-1</span></span>
+        </div>
+
+        <div class="album-id-field" id="albumIdField">
+            <label>🔗 ID альбома (из releases.json)</label>
+            <input type="text" id="albumId" placeholder="Например: agressiya, 39, nespi" />
+            <div class="hint">Укажи ID альбома, к которому относится этот трек. Скопируется из выбранного релиза.</div>
+        </div>
+
+        <div class="textarea-wrap">
+            <label>📜 Текст песни</label>
+            <textarea id="rawText" placeholder="Вставь сюда текст песни...&#10;Строки будут автоматически разбиты в массив."></textarea>
+            <div class="hint">Пустые строки сохраняются как разделители между куплетами. Ctrl+Enter для конвертации.</div>
+        </div>
+
+        <div class="flex">
+            <button class="btn btn-primary" id="convertBtn">⚡ Конвертировать</button>
+            <button class="btn btn-success" id="copyBtn">📋 Копировать JSON</button>
+            <button class="btn btn-danger" id="clearBtn">🗑️ Очистить вывод</button>
+            <button class="btn btn-warning" id="resetCounterBtn">🔄 Сбросить счётчик</button>
+            <span class="copy-feedback" id="copyFeedback">✅ Скопировано!</span>
+        </div>
+
+        <div class="output-wrap">
+            <label>
+                <span>📦 Готовый JSON</span>
+                <span style="font-weight:400;color:#666;font-size:12px;">вставь в <code>lyrics.json</code></span>
+            </label>
+            <pre id="output">Загрузи releases.json, чтобы начать</pre>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // 🧠 ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
+        // ============================================================
+        let releasesData = []
+        let albumCounter = 1
+        let isDataLoaded = false
+
+        // DOM-элементы
+        const titleInput = document.getElementById('title')
+        const yearInput = document.getElementById('year')
+        const artistInput = document.getElementById('artist')
+        const rawText = document.getElementById('rawText')
+        const output = document.getElementById('output')
+        const convertBtn = document.getElementById('convertBtn')
+        const copyBtn = document.getElementById('copyBtn')
+        const clearBtn = document.getElementById('clearBtn')
+        const resetCounterBtn = document.getElementById('resetCounterBtn')
+        const copyFeedback = document.getElementById('copyFeedback')
+        const isAlbumCheckbox = document.getElementById('isAlbum')
+        const albumIdField = document.getElementById('albumIdField')
+        const albumIdInput = document.getElementById('albumId')
+        const releaseSelect = document.getElementById('releaseSelect')
+        const releaseCount = document.getElementById('releaseCount')
+        const counterDisplay = document.getElementById('counterDisplay')
+        const statusText = document.getElementById('statusText')
+        const statusDot = document.getElementById('statusDot')
+        const albumIdPreview = document.getElementById('albumIdPreview')
+        const fileInput = document.getElementById('fileInput')
+        const uploadArea = document.getElementById('uploadArea')
+        const searchInput = document.getElementById('searchInput')
+        const searchWrap = document.getElementById('searchWrap')
+        const releaseWrap = document.getElementById('releaseWrap')
+
+        // ============================================================
+        // 📂 ЗАГРУЗКА ФАЙЛА
+        // ============================================================
+
+        // Клик по области загрузки
+        uploadArea.addEventListener('click', () => fileInput.click())
+
+        // Выбор файла
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0]
+            if (file) loadFile(file)
+        })
+
+        // Drag and Drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault()
+            uploadArea.classList.add('dragover')
+        })
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover')
+        })
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault()
+            uploadArea.classList.remove('dragover')
+            const file = e.dataTransfer.files[0]
+            if (file) loadFile(file)
+        })
+
+        function loadFile(file) {
+            if (!file.name.endsWith('.json')) {
+                setStatus('❌ Загрузи файл releases.json!', 'red')
+                return
+            }
+
+            const reader = new FileReader()
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result)
+                    if (!Array.isArray(data) || data.length === 0) {
+                        setStatus('❌ Файл пустой или не содержит массив!', 'red')
+                        return
+                    }
+                    releasesData = data
+                    isDataLoaded = true
+                    uploadArea.classList.add('file-loaded')
+                    uploadArea.querySelector('.text').innerHTML = '✅ <strong>' + file.name + '</strong> загружен! (' + releasesData.length + ' релизов)'
+                    setStatus('✅ Загружено ' + releasesData.length + ' релизов', 'green')
+                    releaseCount.textContent = releasesData.length
+                    searchWrap.style.display = 'block'
+                    releaseWrap.style.display = 'block'
+                    populateReleaseSelect()
+                    output.textContent = 'Нажми «Конвертировать»'
+                } catch (err) {
+                    setStatus('❌ Ошибка парсинга JSON: ' + err.message, 'red')
+                }
+            }
+            reader.onerror = () => setStatus('❌ Ошибка чтения файла', 'red')
+            reader.readAsText(file)
+        }
+
+        // ============================================================
+        // 🔍 ПОИСК И ЗАПОЛНЕНИЕ СПИСКА
+        // ============================================================
+
+        function populateReleaseSelect() {
+            releaseSelect.innerHTML = '<option value="">— выбери релиз из списка —</option>'
+            if (!releasesData || releasesData.length === 0) {
+                const opt = document.createElement('option')
+                opt.value = ''
+                opt.textContent = '⚠️ Нет данных'
+                opt.disabled = true
+                releaseSelect.appendChild(opt)
+                return
+            }
+
+            // Сортируем по году (новые → старые)
+            const sorted = [...releasesData].sort((a, b) => parseInt(b.year) - parseInt(a.year))
+            const grouped = sorted.reduce((acc, r) => {
+                const year = r.year
+                if (!acc[year]) acc[year] = []
+                acc[year].push(r)
+                return acc
+            }, {})
+
+            const years = Object.keys(grouped).sort((a, b) => parseInt(b) - parseInt(a))
+
+            years.forEach(year => {
+                const groupOpt = document.createElement('option')
+                groupOpt.disabled = true
+                groupOpt.style.color = '#2563eb'
+                groupOpt.textContent = `── ${year} ──`
+                releaseSelect.appendChild(groupOpt)
+
+                grouped[year].forEach(r => {
+                    const opt = document.createElement('option')
+                    opt.value = r.id
+                    const typeIcon = r.type === 'Альбом' ? '📀' : r.type === 'Сборник' ? '💿' : '🎵'
+                    opt.textContent = `${typeIcon} ${r.title} — ${r.type}`
+                    if (r.type === 'Сингл · новый') {
+                        opt.textContent = `✨ ${r.title} — Сингл`
+                    }
+                    releaseSelect.appendChild(opt)
+                })
+            })
+        }
+
+        // Поиск
+        searchInput.addEventListener('input', function () {
+            const query = this.value.toLowerCase().trim()
+            const options = releaseSelect.querySelectorAll('option:not([disabled])')
+            options.forEach(opt => {
+                if (!opt.value) return
+                const text = opt.textContent.toLowerCase()
+                opt.style.display = text.includes(query) ? '' : 'none'
+            })
+        })
+
+        // При выборе релиза
+        releaseSelect.addEventListener('change', function () {
+            const selectedId = this.value
+            if (!selectedId) {
+                titleInput.value = ''
+                yearInput.value = ''
+                artistInput.value = 'Pra(Killa`Gramm)'
+                isAlbumCheckbox.checked = false
+                albumIdField.classList.remove('visible')
+                albumIdInput.value = ''
+                setStatus('✅ Готов к работе', 'green')
+                return
+            }
+
+            const release = releasesData.find(r => r.id === selectedId)
+            if (!release) return
+
+            titleInput.value = release.title
+            yearInput.value = release.year
+
+            // Пробуем найти исполнителя из названия (если есть "ft.")
+            const ftMatch = release.title.match(/\(ft\.\s*([^)]+)\)/i)
+            artistInput.value = ftMatch ? `Pra(Killa\`Gramm), ${ftMatch[1]}` : 'Pra(Killa`Gramm)'
+
+            setStatus(`🎯 Выбран: ${release.title} (${release.year})`, 'green')
+
+            const isAlbumType = release.type === 'Альбом' || release.type === 'Сборник'
+            if (isAlbumType) {
+                isAlbumCheckbox.checked = true
+                albumIdField.classList.add('visible')
+                albumIdInput.value = release.id
+                albumIdPreview.textContent = `${release.id}-${albumCounter}`
+                setStatus(`📀 Альбом: ${release.title} → трек #${albumCounter}`, 'green')
+            } else {
+                isAlbumCheckbox.checked = false
+                albumIdField.classList.remove('visible')
+                albumIdInput.value = ''
+                setStatus(`🎵 Сингл: ${release.title}`, 'green')
+            }
+            updateAlbumIdPreview()
+        })
+
+        // ============================================================
+        // 🔧 ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+        // ============================================================
+
+        function setStatus(text, color = 'green') {
+            statusText.textContent = text
+            statusDot.className = 'dot ' + color
+        }
+
+        function updateAlbumIdPreview() {
+            if (isAlbumCheckbox.checked && albumIdInput.value) {
+                albumIdPreview.textContent = `${albumIdInput.value}-${albumCounter}`
+            } else if (isAlbumCheckbox.checked && !albumIdInput.value) {
+                albumIdPreview.textContent = 'альбом-1'
+            } else {
+                albumIdPreview.textContent = '—'
+            }
+        }
+
+        function generateId(title) {
+            return title
+                .toLowerCase()
+                .trim()
+                .replace(/\s+/g, '-')
+                .replace(/[^a-zа-яё0-9-]/g, '')
+        }
+
+        // ============================================================
+        // ⚡ ОСНОВНЫЕ ДЕЙСТВИЯ
+        // ============================================================
+
+        isAlbumCheckbox.addEventListener('change', function () {
+            albumIdField.classList.toggle('visible', this.checked)
+            if (this.checked && albumIdInput.value) {
+                albumIdPreview.textContent = `${albumIdInput.value}-${albumCounter}`
+            }
+            updateAlbumIdPreview()
+        })
+
+        albumIdInput.addEventListener('input', updateAlbumIdPreview)
+
+        function convertLyrics() {
+            if (!isDataLoaded) {
+                output.textContent = '⚠️ Сначала загрузи releases.json!'
+                setStatus('❌ Нет данных', 'red')
+                return
+            }
+
+            const title = titleInput.value.trim() || 'Без названия'
+            const year = yearInput.value.trim() || '2026'
+            const artist = artistInput.value.trim() || 'Pra(Killa`Gramm)'
+            const text = rawText.value
+            const isAlbum = isAlbumCheckbox.checked
+            const albumId = albumIdInput.value.trim()
+
+            if (!text.trim()) {
+                output.textContent = '⚠️ Вставьте текст песни!'
+                setStatus('❌ Ошибка: нет текста', 'red')
+                return
+            }
+
+            const lines = text.split('\n').map(line => line.trimEnd())
+            let start = 0, end = lines.length - 1
+            while (start < lines.length && lines[start] === '') start++
+            while (end >= 0 && lines[end] === '') end--
+            const cleaned = lines.slice(start, end + 1)
+
+            let resultId, resultAlbumId = ''
+
+            if (isAlbum) {
+                if (!albumId) {
+                    output.textContent = '⚠️ Для альбомного трека укажи ID альбома!'
+                    setStatus('❌ Ошибка: нет ID альбома', 'red')
+                    return
+                }
+                resultId = `${albumId}-${albumCounter}`
+                albumCounter++
+                resultAlbumId = albumId
+                setStatus(`📀 Трек #${albumCounter - 1} для альбома ${albumId}`, 'green')
+            } else {
+                resultId = generateId(title)
+                resultAlbumId = ''
+                setStatus(`🎵 Сингл: ${title} → ID: ${resultId}`, 'green')
+            }
+
+            const result = {
+                id: resultId,
+                title: title,
+                year: year,
+                artist: artist,
+                albumId: resultAlbumId,
+                lines: cleaned
+            }
+
+            output.textContent = JSON.stringify(result, null, 2)
+            counterDisplay.textContent = albumCounter
+            updateAlbumIdPreview()
+        }
+
+        function copyJson() {
+            const text = output.textContent
+            if (!text || text === 'Нажми «Конвертировать»' || text.startsWith('⚠️')) {
+                copyFeedback.textContent = '⚠️ Сначала сконвертируй!'
+                copyFeedback.style.color = '#f59e0b'
+                copyFeedback.classList.add('show')
+                setTimeout(() => {
+                    copyFeedback.classList.remove('show')
+                    copyFeedback.textContent = '✅ Скопировано!'
+                    copyFeedback.style.color = '#16a34a'
+                }, 2000)
+                return
+            }
+
+            navigator.clipboard.writeText(text).then(() => {
+                copyFeedback.classList.add('show')
+                setTimeout(() => copyFeedback.classList.remove('show'), 2500)
+            }).catch(() => {
+                const range = document.createRange()
+                range.selectNode(output)
+                window.getSelection().removeAllRanges()
+                window.getSelection().addRange(range)
+                document.execCommand('copy')
+                copyFeedback.classList.add('show')
+                setTimeout(() => copyFeedback.classList.remove('show'), 2500)
+            })
+        }
+
+        function clearOutput() {
+            output.textContent = isDataLoaded ? 'Нажми «Конвертировать»' : 'Загрузи releases.json, чтобы начать'
+            copyFeedback.classList.remove('show')
+            albumCounter = 1
+            counterDisplay.textContent = albumCounter
+            setStatus('🗑️ Очищено', 'green')
+            updateAlbumIdPreview()
+        }
+
+        function resetCounter() {
+            albumCounter = 1
+            counterDisplay.textContent = albumCounter
+            setStatus('🔄 Счётчик сброшен на 1', 'green')
+            updateAlbumIdPreview()
+            setTimeout(() => {
+                if (isDataLoaded) {
+                    setStatus('✅ Готов к работе', 'green')
+                }
+            }, 1500)
+        }
+
+        // ============================================================
+        // 🎯 СОБЫТИЯ
+        // ============================================================
+
+        convertBtn.addEventListener('click', convertLyrics)
+        copyBtn.addEventListener('click', copyJson)
+        clearBtn.addEventListener('click', clearOutput)
+        resetCounterBtn.addEventListener('click', resetCounter)
+
+        rawText.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                e.preventDefault()
+                convertLyrics()
+            }
+        })
+
+        // ============================================================
+        // 🚀 ИНИЦИАЛИЗАЦИЯ
+        // ============================================================
+
+        setStatus('📂 Загрузи releases.json', 'yellow')
+        output.textContent = 'Загрузи releases.json, чтобы начать'
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  animation: marquee 20s linear infinite;
+  width: max-content;
+  /* padding-left: 50%; ← УБРАТЬ эту строку */
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
