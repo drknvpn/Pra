@@ -20,32 +20,52 @@ export function Hero() {
                     sizes="100vw"
                     className="object-contain object-bottom md:object-right-bottom"
                     style={{
-                        // ✅ ГРАДИЕНТНАЯ МАСКА — края плавно исчезают
+                        // ✅ УЛУЧШЕННАЯ МАСКА — на мобилках больше прозрачности снизу
                         maskImage: `
-              radial-gradient(
-                ellipse 90% 80% at 70% 90%,
-                black 30%,
-                rgba(0,0,0,0.8) 60%,
-                transparent 100%
-              )
-            `,
+                            radial-gradient(
+                                ellipse 90% 70% at 70% 90%,
+                                black 20%,
+                                rgba(0,0,0,0.6) 50%,
+                                transparent 85%
+                            )
+                        `,
                         WebkitMaskImage: `
-              radial-gradient(
-                ellipse 90% 80% at 70% 90%,
-                black 30%,
-                rgba(0,0,0,0.8) 60%,
-                transparent 100%
-              )
-            `,
+                            radial-gradient(
+                                ellipse 90% 70% at 70% 90%,
+                                black 20%,
+                                rgba(0,0,0,0.6) 50%,
+                                transparent 85%
+                            )
+                        `,
+                        // ✅ Дополнительная маска для мобилок — больше прозрачности снизу
+                        '@media (max-width: 768px)': {
+                            maskImage: `
+                                radial-gradient(
+                                    ellipse 100% 60% at 50% 95%,
+                                    black 15%,
+                                    rgba(0,0,0,0.4) 50%,
+                                    transparent 80%
+                                )
+                            `,
+                            WebkitMaskImage: `
+                                radial-gradient(
+                                    ellipse 100% 60% at 50% 95%,
+                                    black 15%,
+                                    rgba(0,0,0,0.4) 50%,
+                                    transparent 80%
+                                )
+                            `,
+                        }
                     }}
                 />
 
-                {/* ✅ Лёгкое затемнение для читаемости текста */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/10" />
-                <div className="absolute inset-0 bg-gradient-to-r from-background via-background/30 to-transparent" />
+                {/* ✅ Затемнение для читаемости текста */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/20" />
+                <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent" />
             </div>
 
-            <div className="relative z-10 mx-auto w-full max-w-6xl px-4 md:px-6">
+            {/* ✅ Контент с дополнительным отступом снизу на мобилках */}
+            <div className="relative z-10 mx-auto w-full max-w-6xl px-4 md:px-6 pb-16 md:pb-0">
                 {/* tag */}
                 <div className="mb-5 flex items-center gap-3">
                     <span className="inline-block h-2 w-2 animate-pulse bg-primary" />
