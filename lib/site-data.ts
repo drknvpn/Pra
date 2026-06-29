@@ -4,8 +4,10 @@
  * ============================================================
  */
 
-import releasesData from '@/public/data/releases.json'
+import releasesData from '@/public/data/releases.json' // ← добавляем импорт релизов
 import lyricsData from '@/public/data/lyrics.json'  // ← добавляем импорт текстов
+export const META_DISCLAIMER =
+    'Компания Meta Platforms Inc. признана экстремистской организацией, её деятельность на территории Российской Федерации запрещена. Facebook и Instagram являются продуктами компании Meta, деятельность которой в России запрещена.'
 
 export type Release = {
     id: string
