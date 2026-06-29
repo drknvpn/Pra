@@ -12,38 +12,65 @@ export function Hero() {
         >
             {/* Artist photo */}
             <div className="pointer-events-none absolute inset-0 z-0">
-                <Image
-                    src="/images/artist.png"
-                    alt="Pra(Killa`Gramm) — портрет"
-                    fill
-                    priority
-                    sizes="100vw"
-                    className="object-contain object-bottom md:object-right-bottom"
-                    style={{
-                        // ✅ Для мобилок — фото сверху, для компа — справа снизу
-                        objectPosition: 'bottom center',
-                        '@media (min-width: 768px)': {
-                            objectPosition: 'right bottom',
-                        },
-                        // ✅ ГРАДИЕНТНАЯ МАСКА — края плавно исчезают
-                        maskImage: `
-                            radial-gradient(
-                                ellipse 90% 80% at 70% 90%,
-                                black 30%,
-                                rgba(0,0,0,0.8) 60%,
-                                transparent 100%
-                            )
-                        `,
-                        WebkitMaskImage: `
-                            radial-gradient(
-                                ellipse 90% 80% at 70% 90%,
-                                black 30%,
-                                rgba(0,0,0,0.8) 60%,
-                                transparent 100%
-                            )
-                        `,
-                    }}
-                />
+                {/* Для мобилок — фото сверху */}
+                <div className="block md:hidden absolute inset-0">
+                    <Image
+                        src="/images/artist.png"
+                        alt="Pra(Killa`Gramm) — портрет"
+                        fill
+                        priority
+                        sizes="100vw"
+                        className="object-contain object-top"
+                        style={{
+                            maskImage: `
+                                radial-gradient(
+                                    ellipse 100% 70% at 50% 100%,
+                                    black 20%,
+                                    rgba(0,0,0,0.6) 60%,
+                                    transparent 100%
+                                )
+                            `,
+                            WebkitMaskImage: `
+                                radial-gradient(
+                                    ellipse 100% 70% at 50% 100%,
+                                    black 20%,
+                                    rgba(0,0,0,0.6) 60%,
+                                    transparent 100%
+                                )
+                            `,
+                        }}
+                    />
+                </div>
+
+                {/* Для ПК — фото справа снизу (как было) */}
+                <div className="hidden md:block absolute inset-0">
+                    <Image
+                        src="/images/artist.png"
+                        alt="Pra(Killa`Gramm) — портрет"
+                        fill
+                        priority
+                        sizes="100vw"
+                        className="object-contain object-right-bottom"
+                        style={{
+                            maskImage: `
+                                radial-gradient(
+                                    ellipse 90% 80% at 70% 90%,
+                                    black 30%,
+                                    rgba(0,0,0,0.8) 60%,
+                                    transparent 100%
+                                )
+                            `,
+                            WebkitMaskImage: `
+                                radial-gradient(
+                                    ellipse 90% 80% at 70% 90%,
+                                    black 30%,
+                                    rgba(0,0,0,0.8) 60%,
+                                    transparent 100%
+                                )
+                            `,
+                        }}
+                    />
+                </div>
 
                 {/* ✅ Затемнение для читаемости текста */}
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/10" />
