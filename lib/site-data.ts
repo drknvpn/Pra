@@ -31,16 +31,6 @@ export type Social = {
     url: string
 }
 
-export type Lyric = {
-    id: string
-    title: string
-    artist: string
-    text: string
-}
-
-/* -------------------- ТЕКСТЫ (временно пусто) -------------------- */
-export const lyrics: Lyric[] = []
-
 /* -------------------- ССЫЛКИ CTA (Хиро) -------------------- */
 export const VK_URL = 'https://vk.com/prakillagramm'
 export const VM_URL = 'https://vk.com/audios-15864713'
