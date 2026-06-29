@@ -12,7 +12,7 @@ export function Hero() {
         >
             {/* Artist photo */}
             <div className="pointer-events-none absolute inset-0 z-0">
-                {/* Для мобилок — фото сверху */}
+                {/* Для мобилок — фото сверху, без затемнения */}
                 <div className="block md:hidden absolute inset-0">
                     <Image
                         src="/images/artist.png"
@@ -70,11 +70,11 @@ export function Hero() {
                             `,
                         }}
                     />
-                </div>
 
-                {/* ✅ Затемнение для читаемости текста */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/10" />
-                <div className="absolute inset-0 bg-gradient-to-r from-background via-background/30 to-transparent" />
+                    {/* ✅ Затемнение ТОЛЬКО для ПК */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/10" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-background via-background/30 to-transparent" />
+                </div>
             </div>
 
             <div className="relative z-10 mx-auto w-full max-w-6xl px-4 md:px-6">
