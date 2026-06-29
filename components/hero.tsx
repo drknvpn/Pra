@@ -20,7 +20,12 @@ export function Hero() {
                     sizes="100vw"
                     className="object-contain object-bottom md:object-right-bottom"
                     style={{
-                        // ✅ ГРАДИЕНТНАЯ МАСКА — только чтобы края плавно исчезали
+                        // ✅ Для мобилок — фото сверху, для компа — справа снизу
+                        objectPosition: 'bottom center',
+                        '@media (min-width: 768px)': {
+                            objectPosition: 'right bottom',
+                        },
+                        // ✅ ГРАДИЕНТНАЯ МАСКА — края плавно исчезают
                         maskImage: `
                             radial-gradient(
                                 ellipse 90% 80% at 70% 90%,
@@ -40,12 +45,11 @@ export function Hero() {
                     }}
                 />
 
-                {/* ✅ Лёгкое затемнение для читаемости текста — оставляем минимальное */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background/5" />
-                <div className="absolute inset-0 bg-gradient-to-r from-background via-background/20 to-transparent" />
+                {/* ✅ Затемнение для читаемости текста */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/10" />
+                <div className="absolute inset-0 bg-gradient-to-r from-background via-background/30 to-transparent" />
             </div>
 
-            {/* Контент — без дополнительных отступов */}
             <div className="relative z-10 mx-auto w-full max-w-6xl px-4 md:px-6">
                 {/* tag */}
                 <div className="mb-5 flex items-center gap-3">
