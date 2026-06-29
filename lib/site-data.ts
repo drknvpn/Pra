@@ -1,12 +1,11 @@
 /**
  * ============================================================
  *  ЕДИНЫЙ ФАЙЛ КОНТЕНТА — Pra(Killa`Gramm)
- * ------------------------------------------------------------
- *  Теперь без текстов — они подгружаются с Genius
  * ============================================================
  */
 
 import releasesData from '@/public/data/releases.json'
+import lyricsData from '@/public/data/lyrics.json'  // ← добавляем импорт текстов
 
 export type Release = {
     id: string
@@ -23,6 +22,7 @@ export type Show = {
     date: string
     ticketUrl: string
     soldOut?: boolean
+    year?: string
 }
 
 export type Social = {
@@ -30,6 +30,16 @@ export type Social = {
     handle: string
     url: string
 }
+
+export type Lyric = {
+    id: string
+    title: string
+    artist: string
+    text: string
+}
+
+/* -------------------- ТЕКСТЫ ПЕСЕН -------------------- */
+export const lyrics: Lyric[] = lyricsData  // ← экспортируем тексты
 
 /* -------------------- ССЫЛКИ CTA (Хиро) -------------------- */
 export const VK_URL = 'https://vk.com/prakillagramm'
