@@ -12,7 +12,7 @@ export function Hero() {
         >
             {/* Artist photo */}
             <div className="pointer-events-none absolute inset-0 z-0">
-                {/* Для мобилок — фото сверху, без затемнения */}
+                {/* Для мобилок — фото сверху, БЕЗ ЗАТЕМНЕНИЯ */}
                 <div className="block md:hidden absolute inset-0">
                     <Image
                         src="/images/artist.png"
@@ -40,6 +40,7 @@ export function Hero() {
                             `,
                         }}
                     />
+                    {/* ⚠️ НЕТ ЗАТЕМНЕНИЯ ДЛЯ МОБИЛОК */}
                 </div>
 
                 {/* Для ПК — фото справа снизу (как было) */}
@@ -70,7 +71,6 @@ export function Hero() {
                             `,
                         }}
                     />
-
                     {/* ✅ Затемнение ТОЛЬКО для ПК */}
                     <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/10" />
                     <div className="absolute inset-0 bg-gradient-to-r from-background via-background/30 to-transparent" />
