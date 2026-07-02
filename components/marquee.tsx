@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 
 const WORDS = [
   '#PDVLFIRMA',
-  'ГОЛОС ИЗ ПОДВАЛА',
+  'ЧЕРНЯХОВСК',
   'КАЛИНИНГРАД 39',
   'БОЖЕ',
   'ХРАНИ',
