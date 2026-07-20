@@ -82,7 +82,7 @@ export function LyricsSection() {
                             </h3>
                             <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
                                 В настоящий момент мы обновляем библиотеку текстов песен, 
-                                чтобы сделать её удобнее и быстрее. 
+                                чтобы сделать её удобнее. 
                                 Приносим извинения за неудобства — 
                                 <span className="block mt-1 font-mono text-xs text-primary/80">
                                     всё вернётся в ближайшее время
