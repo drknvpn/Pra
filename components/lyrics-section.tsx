@@ -33,7 +33,7 @@ export function LyricsSection() {
                     <SectionHeading index="03 / ТЕКСТЫ" title="Тексты" />
                 </Reveal>
 
-                {/* Блок с текстами и оверлеем */}
+                {/* Блок с текстами, кнопкой и оверлеем */}
                 <div className="relative">
                     {/* Список текстов */}
                     <ul className="grid gap-px border border-border bg-border sm:grid-cols-2">
@@ -58,8 +58,21 @@ export function LyricsSection() {
                         ))}
                     </ul>
 
-                    {/* ✅ Затемнённая плашка с блюром поверх всего блока */}
-                    <div className="absolute inset-0 flex items-center justify-center bg-background/60 backdrop-blur-sm">
+                    {/* Кнопка "Все тексты" — теперь внутри блока с оверлеем */}
+                    <Reveal delay={120}>
+                        <div className="mt-8 flex justify-center">
+                            <Link
+                                href="/lyrics"
+                                className="group inline-flex items-center gap-3 border border-border bg-card px-6 py-3 font-mono text-xs uppercase tracking-widest text-foreground transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground"
+                            >
+                                <span>Все тексты ({lyrics.length})</span>
+                                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                            </Link>
+                        </div>
+                    </Reveal>
+
+                    {/* ✅ Затемнённая плашка с блюром — перекрывает ВСЁ: и тексты, и кнопку */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/60 backdrop-blur-sm">
                         <div className="max-w-md border border-border bg-card/90 p-8 text-center shadow-2xl">
                             <span className="font-mono text-xs uppercase tracking-widest text-primary">
                                 🔧 Технические работы
@@ -82,21 +95,6 @@ export function LyricsSection() {
                         </div>
                     </div>
                 </div>
-
-                {/* ✅ Кнопка "Все тексты" (тоже затемнена) */}
-                <Reveal delay={120}>
-                    <div className="relative mt-8 flex justify-center">
-                        <Link
-                            href="/lyrics"
-                            className="group inline-flex items-center gap-3 border border-border bg-card px-6 py-3 font-mono text-xs uppercase tracking-widest text-foreground transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground"
-                        >
-                            <span>Все тексты ({lyrics.length})</span>
-                            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                        </Link>
-                        {/* Блюр поверх кнопки (опционально) */}
-                        <div className="absolute inset-0 pointer-events-none bg-background/40 backdrop-blur-[1px] rounded-lg" />
-                    </div>
-                </Reveal>
             </div>
 
             {/* MODAL — оставляем как есть */}
