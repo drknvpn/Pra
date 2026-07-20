@@ -33,31 +33,59 @@ export function LyricsSection() {
                     <SectionHeading index="03 / ТЕКСТЫ" title="Тексты" />
                 </Reveal>
 
-                <ul className="grid gap-px border border-border bg-border sm:grid-cols-2">
-                    {FEATURED_LYRICS.map((track, i) => (
-                        <Reveal as="li" key={track.id} delay={i * 60}>
-                            <button
-                                type="button"
-                                onClick={() => setOpen(track)}
-                                className="group flex w-full items-center justify-between gap-4 bg-card p-5 text-left transition-colors hover:bg-primary md:p-6"
-                            >
-                                <div className="min-w-0">
-                                    <span className="font-mono text-xs text-muted-foreground transition-colors group-hover:text-primary-foreground/70">
-                                        {String(i + 1).padStart(2, '0')} · {track.year}
-                                    </span>
-                                    <h3 className="heading truncate text-2xl font-bold text-foreground transition-colors group-hover:text-primary-foreground md:text-3xl">
-                                        {track.title}
-                                    </h3>
-                                </div>
-                                <ArrowUpRight className="h-6 w-6 flex-none text-primary transition-all duration-300 group-hover:rotate-45 group-hover:text-primary-foreground" />
-                            </button>
-                        </Reveal>
-                    ))}
-                </ul>
+                {/* Блок с текстами и оверлеем */}
+                <div className="relative">
+                    {/* Список текстов */}
+                    <ul className="grid gap-px border border-border bg-border sm:grid-cols-2">
+                        {FEATURED_LYRICS.map((track, i) => (
+                            <Reveal as="li" key={track.id} delay={i * 60}>
+                                <button
+                                    type="button"
+                                    onClick={() => setOpen(track)}
+                                    className="group flex w-full items-center justify-between gap-4 bg-card p-5 text-left transition-colors hover:bg-primary md:p-6"
+                                >
+                                    <div className="min-w-0">
+                                        <span className="font-mono text-xs text-muted-foreground transition-colors group-hover:text-primary-foreground/70">
+                                            {String(i + 1).padStart(2, '0')} · {track.year}
+                                        </span>
+                                        <h3 className="heading truncate text-2xl font-bold text-foreground transition-colors group-hover:text-primary-foreground md:text-3xl">
+                                            {track.title}
+                                        </h3>
+                                    </div>
+                                    <ArrowUpRight className="h-6 w-6 flex-none text-primary transition-all duration-300 group-hover:rotate-45 group-hover:text-primary-foreground" />
+                                </button>
+                            </Reveal>
+                        ))}
+                    </ul>
 
-                {/* ✅ Кнопка "Все тексты" */}
+                    {/* ✅ Затемнённая плашка с блюром поверх всего блока */}
+                    <div className="absolute inset-0 flex items-center justify-center bg-background/60 backdrop-blur-sm">
+                        <div className="max-w-md border border-border bg-card/90 p-8 text-center shadow-2xl">
+                            <span className="font-mono text-xs uppercase tracking-widest text-primary">
+                                🔧 Технические работы
+                            </span>
+                            <h3 className="heading mt-3 text-2xl font-bold text-foreground md:text-3xl">
+                                Тексты временно недоступны
+                            </h3>
+                            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                                В настоящий момент мы обновляем библиотеку текстов песен, 
+                                чтобы сделать её удобнее и быстрее. 
+                                Приносим извинения за неудобства — 
+                                <span className="block mt-1 font-mono text-xs text-primary/80">
+                                    всё вернётся в ближайшее время
+                                </span>
+                            </p>
+                            <div className="mt-6 h-0.5 w-12 bg-primary/30 mx-auto" />
+                            <p className="mt-4 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                                Следите за обновлениями
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* ✅ Кнопка "Все тексты" (тоже затемнена) */}
                 <Reveal delay={120}>
-                    <div className="mt-8 flex justify-center">
+                    <div className="relative mt-8 flex justify-center">
                         <Link
                             href="/lyrics"
                             className="group inline-flex items-center gap-3 border border-border bg-card px-6 py-3 font-mono text-xs uppercase tracking-widest text-foreground transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground"
@@ -65,11 +93,13 @@ export function LyricsSection() {
                             <span>Все тексты ({lyrics.length})</span>
                             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </Link>
+                        {/* Блюр поверх кнопки (опционально) */}
+                        <div className="absolute inset-0 pointer-events-none bg-background/40 backdrop-blur-[1px] rounded-lg" />
                     </div>
                 </Reveal>
             </div>
 
-            {/* MODAL */}
+            {/* MODAL — оставляем как есть */}
             {open && (
                 <div
                     role="dialog"
@@ -77,7 +107,6 @@ export function LyricsSection() {
                     aria-label={`Текст песни ${open.title}`}
                     className="fixed inset-0 z-[200] flex items-end justify-center p-0 sm:items-center sm:p-4"
                 >
-                    {/* backdrop */}
                     <button
                         type="button"
                         aria-label="Закрыть"
@@ -86,7 +115,6 @@ export function LyricsSection() {
                     />
 
                     <div className="relative z-10 flex max-h-[88svh] w-full max-w-2xl flex-col border border-border bg-card shadow-2xl animate-in fade-in slide-in-from-bottom-6 duration-300">
-                        {/* header */}
                         <div className="flex items-start justify-between gap-4 border-b border-border bg-background/40 p-5 md:p-6">
                             <div>
                                 <span className="font-mono text-xs uppercase tracking-widest text-primary">
@@ -106,7 +134,6 @@ export function LyricsSection() {
                             </button>
                         </div>
 
-                        {/* lyrics body */}
                         <div className="hide-scrollbar overflow-y-auto p-5 md:p-6">
                             <pre className="whitespace-pre-wrap font-mono text-[15px] leading-relaxed text-foreground/90">
                                 {open.lines.map((line, idx) => {
