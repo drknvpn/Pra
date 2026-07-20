@@ -71,9 +71,9 @@ export function LyricsSection() {
                         </div>
                     </Reveal>
 
-                    {/* ✅ Затемнённая плашка с блюром — перекрывает ВСЁ: и тексты, и кнопку */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/60 backdrop-blur-sm">
-                        <div className="max-w-md border border-border bg-card/90 p-8 text-center shadow-2xl">
+                    {/* ✅ Более прозрачный оверлей — текст виден, но клик недоступен */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/30 backdrop-blur-[2px] pointer-events-none">
+                        <div className="max-w-md border border-border/50 bg-card/80 p-8 text-center shadow-2xl pointer-events-auto">
                             <span className="font-mono text-xs uppercase tracking-widest text-primary">
                                 🔧 Технические работы
                             </span>
