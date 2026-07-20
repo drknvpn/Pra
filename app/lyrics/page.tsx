@@ -9,8 +9,15 @@ export const metadata = {
 }
 
 export default function LyricsPage() {
-    // Группируем тексты по годам
-    const lyricsByYear = lyrics.reduce((acc, lyric) => {
+    // ✅ Сортируем все тексты сначала по году (новые → старые), потом по id
+    const sortedLyrics = [...lyrics].sort((a, b) => {
+        const yearDiff = parseInt(b.year) - parseInt(a.year)
+        if (yearDiff !== 0) return yearDiff
+        return a.id.localeCompare(b.id)
+    })
+
+    // Группируем отсортированные тексты по годам
+    const lyricsByYear = sortedLyrics.reduce((acc, lyric) => {
         const year = lyric.year
         if (!acc[year]) acc[year] = []
         acc[year].push(lyric)
@@ -20,7 +27,7 @@ export default function LyricsPage() {
     // Сортируем года
     const sortedYears = Object.keys(lyricsByYear).sort((a, b) => parseInt(b) - parseInt(a))
 
-    const totalLyrics = lyrics.length
+    const totalLyrics = sortedLyrics.length
 
     return (
         <div className="min-h-screen bg-background">
@@ -65,7 +72,6 @@ export default function LyricsPage() {
                                 </h2>
                                 <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                                     {lyricsByYear[year].map((lyric) => {
-                                        // Находим релиз для этого текста (по id)
                                         const release = releases.find((r) => r.id === lyric.id)
 
                                         return (
