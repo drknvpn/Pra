@@ -3,7 +3,7 @@
     "id": "detstvo",
     "title": "Детство",
     "year": "2026",
-    "type": "Сингл · новый",
+    "type": "Сингл",
     "cover": "/covers/detstvo.jpg",
     "link": "https://music.yandex.ru/album/42432434?utm_source=web&utm_medium=copy_link"
   },
@@ -1078,5 +1078,13 @@
     "type": "Сингл",
     "cover": "/covers/namsk.jpg",
     "link": "https://music.yandex.ru/album/10657626?utm_source=web&utm_medium=copy_link"
+  },
+  {
+    "id": "avtoban",
+    "title": "Автобан",
+    "year": "2026",
+    "type": "Сингл · новый",
+    "cover": "/covers/avtoban.jpg",
+    "link": "https://music.yandex.ru/album/42786545/track/152993664?utm_source=web&utm_medium=copy_link"
   }
 ]
